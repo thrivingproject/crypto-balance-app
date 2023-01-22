@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="user">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Balance Getter</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
+    <script type="module" src="public/index.js"></script>
+</head>
+
+<body>
+    <main>
+        <section>
+            <header>
+                <h1>Balance</h1>
+                <h3 id="balance"></h3>
+            </header>
+        </section>
+        <!-- Native -->
+        <section>
+            <header>
+                <h2>Native</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Balance</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody id="native">
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <!-- v3 -->
+        <section>
+            <header>
+                <h2>Liquidty</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pair</th>
+                        <th>Protcol</th>
+                        <th>Token 0</th>
+                        <th>Token 1</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody id="v3">
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <!-- V2 -->
+        <section>
+            <header>
+                <h2>V2 Pools</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pair</th>
+                        <th>Protcol</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FTM / BOO</td>
+                        <td><a href="https://spooky.fi/#/portfolio">Spookyswap</a></td>
+                        <td id="WFTM-BOO"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <!-- Delegated -->
+        <section>
+            <header>
+                <h2>Delegated</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Balance</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AVAX</td>
+                        <td id="delegated-avax">25.5</td>
+                        <td id="delegated-avax-val"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <!-- ERC-20 -->
+        <section>
+            <header>
+                <h2>ERC-20</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Balance</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>OP</td>
+                    <td id="OP-bal"></td>
+                    <td id="OP-val"></td>
+                </tr>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>
