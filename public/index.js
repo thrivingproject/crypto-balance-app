@@ -12,7 +12,7 @@ function getCryptoBalance() {
             getDelegatedAVAX(prices)
             getUniswapLiquidity(prices)
             getNativeTokens(prices)
-            getSPLiquidity(prices)
+            // getSPLiquidity(prices)
         })
 }
 
