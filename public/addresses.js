@@ -33,7 +33,7 @@ const BLOCKCHAINS = {
         wallets: [metamask],
         liquidity: {
             uniswap: {
-                nfts: [632659, 633864, 656022]
+                nfts: [632659, 633864, 656022, 662516]
             }
         },
         provider: 'https://polygon-mainnet.g.alchemy.com/v2/',
