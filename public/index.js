@@ -73,13 +73,6 @@ function getUniUrls(blockchain, uniLidquidity) {
     return uniUrls
 }
 
-function getDelegatedAVAX(prices) {
-    let deletgatedAvax = document.querySelector('#delegated-avax').innerHTML
-    const delegatedAvaxValue = +(deletgatedAvax * prices.AVAX).toFixed(2)
-    totalValueUSD += delegatedAvaxValue
-    document.querySelector('#delegated-avax-val').innerHTML = `$${delegatedAvaxValue}`
-}
-
 function getUniswapLiquidity(prices) {
     for (let [blockchain, data] of Object.entries(BLOCKCHAINS)) {
         let uniLidquidity = data.liquidity?.uniswap
@@ -88,15 +81,16 @@ function getUniswapLiquidity(prices) {
             const uniUrls = getUniUrls(blockchain, uniLidquidity)
             Promise.all(uniUrls.map(url => fetch(url)
                 .then(response => response.json())))
-                .then(liquidityPools => {
-                    liquidityPools.forEach(pool => {
+                .then(data => {
+
+                    data.forEach(position => {
 
                         let poolTokenValues = []
                         let row = v3.insertRow(-1)
-                        row.insertCell(-1).innerHTML = Object.keys(pool).join(' / ')
-                        row.insertCell(-1).innerHTML = 'UniSwap'
+                        row.insertCell(-1).innerHTML = Object.keys(position.liquidity).join(' / ')
+                        row.insertCell(-1).innerHTML = `<a target="_blank" href="https://app.uniswap.org/#/pool/${position.nft}">Uniswap</a>`
 
-                        for (const [tokenSymbol, quantity] of Object.entries(pool)) {
+                        for (const [tokenSymbol, quantity] of Object.entries(position.liquidity)) {
                             poolTokenValues.push(quantity * prices[tokenSymbol])
                         }
 
@@ -128,6 +122,13 @@ function getUniswapLiquidity(prices) {
 
 function updateBal() {
     document.querySelector("#balance").innerHTML = `$${totalValueUSD.toFixed(2)}`
+}
+
+function getDelegatedAVAX(prices) {
+    let deletgatedAvax = document.querySelector('#delegated-avax').innerHTML
+    const delegatedAvaxValue = +(deletgatedAvax * prices.AVAX).toFixed(2)
+    totalValueUSD += delegatedAvaxValue
+    document.querySelector('#delegated-avax-val').innerHTML = `$${delegatedAvaxValue}`
 }
 
 document.addEventListener('DOMContentLoaded', () => {

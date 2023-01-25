@@ -44,7 +44,7 @@ app.get('/uni', (req, res) => {
 
         try {
             response = await getPositions(tokenID, providerURL)
-            resolve(res.json(response))
+            resolve(res.json({liquidity: response, nft: tokenID}))
         } catch (ex) {
             console.log(ex);
             reject(ex)
@@ -146,6 +146,7 @@ app.get('/quicknode', (req, res) => {
     })
 })
 
+// Spookywap fantom contract token supply
 app.get('/tokenSupply', (req, res) => {
     const tokenSupplyURL = 'https://api.ftmscan.com/api'
         + '?module=stats'
@@ -166,6 +167,7 @@ app.get('/tokenSupply', (req, res) => {
     })
 })
 
+// Spookyswap fantom pool account balance
 app.get('/tokensAccount', (req, res) => {
     const tokenAccountURL = 'https://api.ftmscan.com/api'
     + '?module=account'

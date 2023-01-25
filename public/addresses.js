@@ -44,7 +44,7 @@ const BLOCKCHAINS = {
         wallets: [metamask],
         liquidity: {
             uniswap: {
-                nfts: [295341, 297368]
+                nfts: [297417, 297549]
             }
         },
         provider: 'https://opt-mainnet.g.alchemy.com/v2/',
