@@ -8,9 +8,21 @@
     <title>Crypto Balance Getter</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css">
     <script type="module" src="public/index.js"></script>
+    <style>
+        #tape-native,
+        #tape-alt {
+            display: flex;
+            column-gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 
 <body>
+    <header>
+        <section id="tape-native" style="margin-bottom: .5rem;"></section>
+        <section id="tape-alt"></section>
+    </header>
     <main>
         <!-- v3 -->
         <section>
@@ -45,7 +57,7 @@
                         <th>Value</th>
                     </tr>
                 </thead>
-                <tbody id="native">
+                <tbody id="single-exposure">
                 </tbody>
             </table>
         </section>

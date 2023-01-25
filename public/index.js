@@ -1,25 +1,67 @@
 import { BLOCKCHAINS } from './addresses.js'
 
 const v3 = document.getElementById('v3')
-const native = document.getElementById('native')
 let totalValueUSD = 0
 
 function getCryptoBalance() {
     fetch('http://localhost:8000/cmc')  // Get token prices
         .then(response => response.json())
-        .then(prices => {
+        .then(data => {
+
+            console.log(data);
+
+            // Show prices in HTML header
+            tickerTape(data.changes)
             // TODO: get FTM V3 liqduity (KyberSwap)
-            getDelegatedAVAX(prices)
-            getUniswapLiquidity(prices)
-            getNativeTokens(prices)
+            getDelegatedAVAX(data.prices)
+            getUniswapLiquidity(data.prices)
+            getNativeTokens(data.prices)
             // getSPLiquidity(prices)
         })
 }
 
+function tickerTape(prices) {
+    const ignoreSymbols = ['USDC', 'BOO', 'JOE', 'WETH', 'WMATIC', 'WFTM']
+    const nativeTokens = []
+    const altTokens = []
+    let css = 'style="margin: 0; padding: .25rem; width: 15%; border: solid 1px"'
+    for (const [symbol, data] of Object.entries(prices)) {
+       
+        const priceNum = Number(data.price)
+        let formattedPrice;
+        if (priceNum < 1) {
+            formattedPrice = data.price.toFixed(3)
+        } else if (priceNum < 100) {
+            formattedPrice = data.price.toFixed(2)
+        } else {
+            formattedPrice = data.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+
+        let percent_change_24h = Number(data.percent_change_24h).toFixed(2)
+        let percent_change_color = percent_change_24h < 0 ? '#F34F4E' : '#229F75'
+        let changeTag = `<p style="color: ${percent_change_color}">${percent_change_24h}%`
+        let priceTag = `<p>${symbol}: $${formattedPrice}</p>`
+        let quote = `<div ${css}>${priceTag}${changeTag}</div>`
+
+        if (!ignoreSymbols.includes(symbol)) {
+            if (['WBTC', 'ETH', 'OP', 'FTM', 'MATIC', 'AVAX'].includes(symbol)) {
+                nativeTokens.push(quote)
+            } else {
+                altTokens.push(quote)
+            }
+        }
+    }
+    const nativePriceString = nativeTokens.join('\t')
+    const altPriceString = altTokens.join('\t')
+    document.getElementById('tape-native').innerHTML = nativePriceString
+    document.getElementById('tape-alt').innerHTML = altPriceString
+}
+
 function getNativeTokens(prices) {
     for (let [blockchainName, blockchain] of Object.entries(BLOCKCHAINS)) {
+
         let tokenSymbol = blockchain.nativeToken
-        let row = native.insertRow(-1)
+        let row = document.getElementById('single-exposure').insertRow(-1)
         row.insertCell(-1).innerHTML = tokenSymbol
 
         if (blockchainName === 'FANTOM') {
@@ -100,10 +142,10 @@ function getUniswapLiquidity(prices) {
 
                         poolTokenValues.forEach(value => {
                             let percentageOfPool = value / poolValue * 100
-                            if (percentageOfPool > 85) {
-                                row.style.color = 'yellow'
-                            } else if (percentageOfPool > 99) {
+                            if (percentageOfPool > 90) {
                                 row.style.color = 'red'
+                            } else if (percentageOfPool > 75) {
+                                row.style.color = 'yellow'
                             }
                             row.insertCell(-1).innerHTML = `${percentageOfPool.toFixed(0)}%`
                         })

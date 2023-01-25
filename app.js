@@ -44,7 +44,7 @@ app.get('/uni', (req, res) => {
 
         try {
             response = await getPositions(tokenID, providerURL)
-            resolve(res.json({liquidity: response, nft: tokenID}))
+            resolve(res.json({ liquidity: response, nft: tokenID }))
         } catch (ex) {
             console.log(ex);
             reject(ex)
@@ -82,10 +82,15 @@ app.get('/cmc', (req, res) => {
 
         if (response) {
             let quotes = {}
+            let changes = {}
             for (const value of Object.values(response.data.data)) {
                 quotes[value.symbol] = value.quote.USD.price
+                changes[value.symbol] = {
+                    price: value.quote.USD.price,
+                    percent_change_24h: value.quote.USD.percent_change_24h
+                }
             }
-            res.json(quotes)
+            res.json({prices: quotes, changes: changes})
         }
 
     })
@@ -170,12 +175,12 @@ app.get('/tokenSupply', (req, res) => {
 // Spookyswap fantom pool account balance
 app.get('/tokensAccount', (req, res) => {
     const tokenAccountURL = 'https://api.ftmscan.com/api'
-    + '?module=account'
-    + '&action=tokenbalance'
-    + `&contractaddress=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83`
-    + `&address=0xEc7178F4C41f346b2721907F5cF7628E388A7a58`
-    + `&tag=latest`
-    + `&apikey=${ftmApi}`
+        + '?module=account'
+        + '&action=tokenbalance'
+        + `&contractaddress=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83`
+        + `&address=0xEc7178F4C41f346b2721907F5cF7628E388A7a58`
+        + `&tag=latest`
+        + `&apikey=${ftmApi}`
 
     let re = null
     new Promise(async (resolve, reject) => {
