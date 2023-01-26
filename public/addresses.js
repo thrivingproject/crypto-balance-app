@@ -17,7 +17,7 @@ const BLOCKCHAINS = {
                 0: {
                     spLP: '0xEc7178F4C41f346b2721907F5cF7628E388A7a58',
                     pair: ['WFTM', 'BOO'],
-                    owed: 109.38
+                    owed: 0
                 },
             }
         },

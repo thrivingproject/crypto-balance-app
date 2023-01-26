@@ -8,11 +8,8 @@ function getCryptoBalance() {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
-
-            // Show prices in HTML header
-            tickerTape(data.changes)
             // TODO: get FTM V3 liqduity (KyberSwap)
+            tickerTape(data.changes)
             getDelegatedAVAX(data.prices)
             getUniswapLiquidity(data.prices)
             getNativeTokens(data.prices)
@@ -90,22 +87,22 @@ function populateHTML(qty, prices, tokenSymbol, row) {
     row.insertCell(-1).innerHTML = `$${value.toFixed(2)}`
 }
 
-function getSPLiquidity(prices) {
+// function getSPLiquidity(prices) {
 
-    fetch('http://localhost:8000/tokenSupply')
-        .then(response => response.json())
-        .then(dataTokens => {
-            // Get pool balances
-            fetch('http://localhost:8000/tokensAccount')
-                .then(response => response.json())
-                .then(tokens => {
-                    let myLiquidity = prices['WFTM'] * tokens / Math.pow(10, 18) * 2 * 109.38 / (dataTokens / Math.pow(10, 18))
-                    totalValueUSD += myLiquidity
-                    let tableDataId = `#WFTM-BOO`
-                    document.querySelector(tableDataId).innerHTML = `$${myLiquidity.toFixed(2)}`
-                })
-        })
-}
+//     fetch('http://localhost:8000/tokenSupply')
+//         .then(response => response.json())
+//         .then(dataTokens => {
+//             // Get pool balances
+//             fetch('http://localhost:8000/tokensAccount')
+//                 .then(response => response.json())
+//                 .then(tokens => {
+//                     let myLiquidity = prices['WFTM'] * tokens / Math.pow(10, 18) * 2 * 109.38 / (dataTokens / Math.pow(10, 18))
+//                     totalValueUSD += myLiquidity
+//                     let tableDataId = `#WFTM-BOO`
+//                     document.querySelector(tableDataId).innerHTML = `$${myLiquidity.toFixed(2)}`
+//                 })
+//         })
+// }
 
 function getUniUrls(blockchain, uniLidquidity) {
     const uniUrls = []
@@ -126,7 +123,6 @@ function getUniswapLiquidity(prices) {
                 .then(data => {
 
                     data.forEach(position => {
-
                         let poolTokenValues = []
                         let row = v3.insertRow(-1)
                         row.insertCell(-1).innerHTML = Object.keys(position.liquidity).join(' / ')
