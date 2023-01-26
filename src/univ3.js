@@ -12,7 +12,7 @@ const Q96 = uniswap.JSBI.exponentiate(uniswap.JSBI.BigInt(2), uniswap.JSBI.BigIn
 async function getPositions(nft, providerURL) {
     const provider = new ethers.providers.JsonRpcProvider(providerURL)
 
-    const pool = fs.readFileSync(`public/json/poolABI.json`);  // V3 pool abi json file
+    const pool = fs.readFileSync(`public/json/poolABI.json`);  // Liquidity pool ABI
     let data = await getData(nft);
     let tokens = await getTokenAmounts(data.liquidity, data.SqrtX96, data.tickLow, data.tickHigh, data.T0d, data.T1d);
 
