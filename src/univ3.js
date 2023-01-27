@@ -11,8 +11,6 @@ import fs from "fs"
 import Web3 from 'web3'
 
 
-let amount0wei = 0
-let amount1wei = 0
 const ERC20Abi = fs.readFileSync('public/json/ERC20.json');
 const POOL = fs.readFileSync(`public/json/poolABI.json`);
 const ERC20 = JSON.parse(ERC20Abi);
@@ -22,6 +20,8 @@ const MAX = "340282366920938463463374607431768211455";   // MAX_VALUE UINT128
 
 
 export async function getPositions(tokenId, providerURL) {
+    let amount0wei = 0
+    let amount1wei = 0
     const web3 = new Web3(new Web3.providers.HttpProvider(providerURL))
     const provider = new ethers.providers.JsonRpcProvider(providerURL)
 
@@ -100,7 +100,7 @@ export async function getPositions(tokenId, providerURL) {
             fee: (output.amount1 / (10 ** T1d)).toFixed(T1d)
         }
     }
-
+    // console.log(returnData);
     return returnData
 
 }

@@ -34,9 +34,9 @@ const BLOCKCHAINS = {
         liquidity: {
             uniswap: {
                 nfts: [
-                    666555,
-                    667734,
-                    662516
+                    668922,  // MATIC / WETH
+                    667734,  // MATIC / WBTC
+                    662516  // CRV / WETH
                 ]
             }
         },
