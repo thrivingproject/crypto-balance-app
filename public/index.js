@@ -123,22 +123,26 @@ function getUniswapLiquidity(prices) {
                 .then(data => {
 
                     data.forEach(position => {
+                        console.log(position);
                         let poolTokenValues = []
+                        let fees = []
                         let row = v3.insertRow(-1)
                         row.insertCell(-1).innerHTML = Object.keys(position.liquidity).join(' / ')
                         row.insertCell(-1).innerHTML = `<a target="_blank" href="https://app.uniswap.org/#/pool/${position.nft}">Uniswap</a>`
 
                         for (const [tokenSymbol, quantity] of Object.entries(position.liquidity)) {
-                            poolTokenValues.push(quantity * prices[tokenSymbol])
+                            poolTokenValues.push(quantity.liq * prices[tokenSymbol])
+                            fees.push(quantity.fee * prices[tokenSymbol])
                         }
 
                         let poolValue = poolTokenValues.reduce((previousValue, currentValue) => {
                             return previousValue + currentValue
                         }, 0)
+                        let unclaimedFees = fees.reduceRight((prev, curr) => prev + curr, 0)
 
                         poolTokenValues.forEach(value => {
                             let percentageOfPool = value / poolValue * 100
-                            if (percentageOfPool > 90) {
+                            if (percentageOfPool > 95) {
                                 row.style.color = 'red'
                             } else if (percentageOfPool > 75) {
                                 row.style.color = 'yellow'
@@ -146,9 +150,9 @@ function getUniswapLiquidity(prices) {
                             row.insertCell(-1).innerHTML = `${percentageOfPool.toFixed(0)}%`
                         })
 
-                        totalValueUSD += poolValue
+                        totalValueUSD += poolValue + unclaimedFees
                         row.insertCell(-1).innerHTML = `$${poolValue.toFixed(2)}`
-
+                        row.insertCell(-1).innerHTML = `$${unclaimedFees.toFixed(2)}`
                     })
 
                     updateBal()
