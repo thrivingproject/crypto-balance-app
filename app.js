@@ -19,10 +19,9 @@ app.use(express.static(__dirname))
 dotenv.config()
 const ftmApi = process.env.FTMSCAN_API
 
-// Set true for mock CoinMarketCap quotes to save API credits
 const DEV = false
 
-
+// Index
 app.get('/', (req, res) => {
     return res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
