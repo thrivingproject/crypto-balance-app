@@ -1,29 +1,27 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 import path from 'path';
 import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const { Alchemy, Utils, Network } = require('alchemy-sdk');
-const axios = require('axios');
-const express = require('express');
-const cors = require('cors')
-require('dotenv').config()
-let ftmApi = process.env.FTMSCAN_API
-
-import getPositions from './src/univ3.js'
+import { Alchemy, Utils, Network } from "alchemy-sdk";
+import axios from 'axios'
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import { getPositions } from './src/univ3.js'
 import getAlchemyBalance from "./src/alchemy.js";
 import getQuicknodeBalance from "./src/quicknode.js";
 import { BLOCKCHAINS } from "./public/addresses.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const port = 8000
 const app = express()
 app.use(cors())
+app.use(express.static(__dirname))
+dotenv.config()
+const ftmApi = process.env.FTMSCAN_API
 
 // Set true for mock CoinMarketCap quotes to save API credits
 const DEV = false
 
-app.use(express.static(__dirname))
 
 app.get('/', (req, res) => {
     return res.sendFile(path.join(__dirname, 'public', 'index.html'))
