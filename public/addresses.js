@@ -34,8 +34,8 @@ const BLOCKCHAINS = {
         liquidity: {
             uniswap: {
                 nfts: [
-                    632659,
-                    664680,
+                    666555,
+                    667734,
                     662516
                 ]
             }

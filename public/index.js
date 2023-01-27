@@ -23,7 +23,7 @@ function tickerTape(prices) {
     const altTokens = []
     let css = 'style="margin: 0; padding: .25rem; width: 15%; border: solid 1px"'
     for (const [symbol, data] of Object.entries(prices)) {
-       
+
         const priceNum = Number(data.price)
         let formattedPrice;
         if (priceNum < 1) {
@@ -139,6 +139,12 @@ function getUniswapLiquidity(prices) {
                             return previousValue + currentValue
                         }, 0)
                         let unclaimedFees = fees.reduceRight((prev, curr) => prev + curr, 0)
+                        let now = new Date()
+                        let then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6, 30)
+                        let days = (now - then) / 36e5 / 24
+                        let grossReturn = Math.round(
+                            (unclaimedFees / poolValue + 1) ** (1 / (days / 365))
+                        )
 
                         poolTokenValues.forEach(value => {
                             let percentageOfPool = value / poolValue * 100
@@ -151,8 +157,11 @@ function getUniswapLiquidity(prices) {
                         })
 
                         totalValueUSD += poolValue + unclaimedFees
+
                         row.insertCell(-1).innerHTML = `$${poolValue.toFixed(2)}`
                         row.insertCell(-1).innerHTML = `$${unclaimedFees.toFixed(2)}`
+                        row.insertCell(-1).innerHTML = `${grossReturn}x`
+                    
                     })
 
                     updateBal()
