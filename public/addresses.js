@@ -34,9 +34,7 @@ const BLOCKCHAINS = {
         liquidity: {
             uniswap: {
                 nfts: [
-                    668922,  // MATIC / WETH
-                    667734,  // MATIC / WBTC
-                    662516  // CRV / WETH
+                    
                 ]
             }
         },
@@ -48,7 +46,9 @@ const BLOCKCHAINS = {
         wallets: [metamask],
         liquidity: {
             uniswap: {
-                nfts: [297991, 298216]
+                nfts: [
+
+                ]
             }
         },
         provider: 'https://opt-mainnet.g.alchemy.com/v2/',
