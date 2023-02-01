@@ -72,8 +72,9 @@ function getNativeTokens(prices) {
         } else {
             fetch(`http://localhost:8000/alchemy?blockchainName=${blockchainName}&network=${blockchain.network}`)
                 .then(response => response.json())
-                .then(qty => {
-                    populateHTML(qty, prices, tokenSymbol, row)
+                .then(balances => {
+
+                    populateHTML(balances.nativeTokenBalance, prices, tokenSymbol, row)
                 })
         }
     }
@@ -83,6 +84,7 @@ function populateHTML(qty, prices, tokenSymbol, row) {
     qty = Number(qty)
     let value = qty * prices[tokenSymbol]
     totalValueUSD += value
+    updateBal()
     row.insertCell(-1).innerHTML = qty.toFixed(2)
     row.insertCell(-1).innerHTML = `$${value.toFixed(2)}`
 }

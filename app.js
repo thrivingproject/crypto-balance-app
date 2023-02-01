@@ -96,7 +96,6 @@ app.get('/cmc', (req, res) => {
 
 // Get Polygon and Optimism data via Alchemy
 app.get('/alchemy', (req, res) => {
-
     let re = null
     let apiKey;
     let blockchainName = req.query.blockchainName
@@ -119,11 +118,12 @@ app.get('/alchemy', (req, res) => {
     }
 
     const alchemy = new Alchemy(settings)
+
     new Promise(async (resolve, reject) => {
         try {
-            re = await getAlchemyBalance(alchemy)
-            let bal = Utils.formatEther(re)
-            resolve(res.json(bal))
+            re = await getAlchemyBalance(alchemy, blockchainName)
+            // let balances = Utils.formatEther(re.nativeTokenBalance)
+            resolve(res.json(re))
         } catch (e) {
             re = null
             console.log(e);

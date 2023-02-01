@@ -40,7 +40,8 @@ const BLOCKCHAINS = {
         },
         provider: 'https://polygon-mainnet.g.alchemy.com/v2/',
         network: 'MATIC_MAINNET',
-        nativeToken: 'MATIC'
+        nativeToken: 'MATIC',
+        erc20: {}
     },
     OPTIMISM: {
         wallets: [metamask],
@@ -53,7 +54,17 @@ const BLOCKCHAINS = {
         },
         provider: 'https://opt-mainnet.g.alchemy.com/v2/',
         network: 'OPT_MAINNET',
-        nativeToken: 'ETH'
+        nativeToken: 'ETH',
+        erc20: {
+            USDC: {
+                address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
+                numDecimals: 6
+        },
+            VELO: {
+                address: '0x3c8B650257cFb5f272f799F5e2b4e65093a11a05',
+                numDecimals: 18
+        },
+        }
     }
 }
 
