@@ -58,23 +58,29 @@ function getNativeTokens(prices) {
     for (let [blockchainName, blockchain] of Object.entries(BLOCKCHAINS)) {
 
         let tokenSymbol = blockchain.nativeToken
-        let row = document.getElementById('single-exposure').insertRow(-1)
-        row.insertCell(-1).innerHTML = tokenSymbol
+        let nativeTokenRow = document.getElementById('single-exposure').insertRow(-1)
+        nativeTokenRow.insertCell(-1).innerHTML = tokenSymbol
 
         if (blockchainName === 'FANTOM') {
             fetch(`http://localhost:8000/quicknode`)
                 .then(response => response.json())
                 .then(qty => {
-                    populateHTML(qty, prices, tokenSymbol, row)
+                    populateHTML(qty, prices, tokenSymbol, nativeTokenRow)
                 })
         } else if (blockchainName === 'AVALANCHE') {
             continue
         } else {
+
             fetch(`http://localhost:8000/alchemy?blockchainName=${blockchainName}&network=${blockchain.network}`)
                 .then(response => response.json())
                 .then(balances => {
 
-                    populateHTML(balances.nativeTokenBalance, prices, tokenSymbol, row)
+                    populateHTML(balances.nativeTokenBalance, prices, tokenSymbol, nativeTokenRow)
+                    for (let [erc20Symbol, erc20Bal] of Object.entries(balances.erc20Tokens)) {
+                        let erc20TokenRow = document.getElementById('erc20').insertRow(-1)
+                        erc20TokenRow.insertCell(-1).innerHTML = erc20Symbol
+                        populateHTML(erc20Bal, prices, erc20Symbol, erc20TokenRow)
+                    }
                 })
         }
     }
@@ -163,7 +169,7 @@ function getUniswapLiquidity(prices) {
                         row.insertCell(-1).innerHTML = `$${poolValue.toFixed(2)}`
                         row.insertCell(-1).innerHTML = `$${unclaimedFees.toFixed(2)}`
                         row.insertCell(-1).innerHTML = `${grossReturn}x`
-                    
+
                     })
 
                     updateBal()

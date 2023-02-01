@@ -11,12 +11,12 @@ async function getAlchemyBalance(alchemy, blockchainName) {
     let nativeTokenBalance = await alchemy.core.getBalance(wallet, 'latest');
 
     // Get ERC-20 balances
-    let erc20Tokens = []
+    let erc20Tokens = {}
     for (let [token, profile] of Object.entries(BLOCKCHAINS[blockchainName].erc20)) {
         let balance = await alchemy.core.getTokenBalances(wallet, [profile.address])
         balance = balance['tokenBalances'][0]['tokenBalance'];
         balance = (parseInt(balance) / 10 ** profile.numDecimals).toFixed(2);
-        erc20Tokens.push({[token]: balance})
+        erc20Tokens[token] = balance
     }
 
     return {
