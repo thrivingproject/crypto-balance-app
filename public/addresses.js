@@ -34,21 +34,32 @@ const BLOCKCHAINS = {
         liquidity: {
             uniswap: {
                 nfts: [
-
+                    682550,  // Matic - AAVE
+                    684915  // crv-eth
                 ]
             }
         },
         provider: 'https://polygon-mainnet.g.alchemy.com/v2/',
         network: 'MATIC_MAINNET',
         nativeToken: 'MATIC',
-        erc20: {}
+        erc20: {
+            CRV: {
+                address: '0x172370d5Cd63279eFa6d502DAB29171933a610AF',
+                numDecimals: 18
+            },
+            AAVE: {
+                address: '0xD6DF932A45C0f255f85145f286eA0b292B21C90B',
+                numDecimals: 18
+            }
+        }
     },
     OPTIMISM: {
         wallets: [metamask],
         liquidity: {
             uniswap: {
                 nfts: [
-
+                    304080,  // velo-eth
+                    304088   // op-eth
                 ]
             }
         },
