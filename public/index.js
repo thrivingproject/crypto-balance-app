@@ -40,7 +40,7 @@ function tickerTape(prices) {
             formattedPrice = data.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         }
 
-        let pStyle = 'margin: 0;'
+        let pStyle = 'margin: 0; font-size: 14px;'
         let percent_change_24h = Number(data.percent_change_24h).toFixed(2)
         let percent_change_color = percent_change_24h < 0 ? '#F34F4E' : '#229F75'
         let changeTag = `<p style="${pStyle}color: ${percent_change_color}">${percent_change_24h}%`
@@ -137,7 +137,7 @@ function getUniswapLiquidity(prices) {
                 .then(response => response.json())))
                 .then(data => {
                     data.forEach(position => {
-                        console.log(position);
+
                         let poolTokenValues = []
                         let fees = []
                         let row = v3.insertRow(-1)

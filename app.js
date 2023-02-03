@@ -122,7 +122,6 @@ app.get('/alchemy', (req, res) => {
     new Promise(async (resolve, reject) => {
         try {
             re = await getAlchemyBalance(alchemy, blockchainName)
-            console.log(re);
             resolve(res.json(re))
         } catch (e) {
             re = null
