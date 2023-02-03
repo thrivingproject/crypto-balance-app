@@ -1,7 +1,13 @@
 import { BLOCKCHAINS } from './addresses.js'
 
 const v3 = document.getElementById('v3')
+const liquidity = document.getElementById('liquidity')
+const feesHTML = document.getElementById('fees')
+
 let totalValueUSD = 0
+let liquidityBal = 0
+let totalUnclaimedFees = 0
+
 
 function getCryptoBalance() {
     fetch('http://localhost:8000/cmc')  // Get token prices
@@ -34,10 +40,11 @@ function tickerTape(prices) {
             formattedPrice = data.price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         }
 
+        let pStyle = 'margin: 0;'
         let percent_change_24h = Number(data.percent_change_24h).toFixed(2)
         let percent_change_color = percent_change_24h < 0 ? '#F34F4E' : '#229F75'
-        let changeTag = `<p style="color: ${percent_change_color}">${percent_change_24h}%`
-        let priceTag = `<p>${symbol}: $${formattedPrice}</p>`
+        let changeTag = `<p style="${pStyle}color: ${percent_change_color}">${percent_change_24h}%`
+        let priceTag = `<p style="${pStyle}">${symbol}: $${formattedPrice}</p>`
         let quote = `<div ${css}>${priceTag}${changeTag}</div>`
 
         if (!ignoreSymbols.includes(symbol)) {
@@ -129,7 +136,6 @@ function getUniswapLiquidity(prices) {
             Promise.all(uniUrls.map(url => fetch(url)
                 .then(response => response.json())))
                 .then(data => {
-
                     data.forEach(position => {
                         console.log(position);
                         let poolTokenValues = []
@@ -164,7 +170,9 @@ function getUniswapLiquidity(prices) {
                             row.insertCell(-1).innerHTML = `${percentageOfPool.toFixed(0)}%`
                         })
 
+                        liquidityBal += poolValue
                         totalValueUSD += poolValue + unclaimedFees
+                        totalUnclaimedFees += unclaimedFees
 
                         row.insertCell(-1).innerHTML = `$${poolValue.toFixed(2)}`
                         row.insertCell(-1).innerHTML = `$${unclaimedFees.toFixed(2)}`
@@ -173,7 +181,8 @@ function getUniswapLiquidity(prices) {
                     })
 
                     updateBal()
-
+                    liquidity.innerHTML = `$${liquidityBal.toFixed(2)}`
+                    feesHTML.innerHTML = `$${totalUnclaimedFees.toFixed(2)}`
                 })
         }
     }
