@@ -34,7 +34,7 @@ const BLOCKCHAINS = {
         liquidity: {
             uniswap: {
                 nfts: [
-                    
+
                 ]
             }
         },
@@ -59,11 +59,15 @@ const BLOCKCHAINS = {
             USDC: {
                 address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
                 numDecimals: 6
-        },
+            },
             VELO: {
                 address: '0x3c8B650257cFb5f272f799F5e2b4e65093a11a05',
                 numDecimals: 18
-        },
+            },
+            OP: {
+                address: '0x4200000000000000000000000000000000000042',
+                numDecimals: 18
+            }
         }
     }
 }

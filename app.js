@@ -59,7 +59,7 @@ app.get('/cmc', (req, res) => {
 
         try {
             if (!DEV) {
-                response = await axios.get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=5805,3513,11396,9608,3890,8925,3408,2396,7083,6538,3717,1027,11840,10240,20435,8000', {
+                response = await axios.get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=5805,3513,11396,9608,3890,8925,3408,2396,7083,6538,3717,1027,11840,10240,20435,7278', {
                     headers: {
                         'X-CMC_PRO_API_KEY': process.env.CMC_API_KEY,
                     },
